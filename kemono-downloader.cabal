@@ -1,0 +1,35 @@
+cabal-version:      3.0
+name:               kemono-downloader
+version:            0.1.0.0
+synopsis:           Downloader for Kemono.su / .party
+-- description:
+homepage:           https://github.com/meritamen/kemono-downloader
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Mrjt Jmn
+maintainer:         meritamen@sdf.org
+-- copyright:
+category:           Web
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall -Wno-name-shadowing
+
+executable kemono-downloader
+    import:           warnings
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:    aeson
+                    , base ^>=4.18.3.0
+                    , bytestring
+                    , directory
+                    , exceptions
+                    , filepath
+                    , http-conduit
+                    , text
+
+    hs-source-dirs:   app
+    default-language: Haskell2010
