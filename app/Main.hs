@@ -1,7 +1,6 @@
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE StandaloneDeriving #-}
 
 module Main where
 
@@ -19,27 +18,21 @@ import System.Environment
 import System.FilePath
 
 data Post = Post { title :: String }
-  deriving (Show, Generic)
-
-deriving instance FromJSON Post
+  deriving (Show, Generic, FromJSON)
 
 data FileEntry = FileEntry
   { server :: String
   , name :: String
   , path :: String
   }
-  deriving (Show, Generic)
-
-deriving instance FromJSON FileEntry
+  deriving (Show, Generic, FromJSON)
 
 data APIResponse = APIResponse
   { post :: Post
   , previews :: [FileEntry]
   , attachments :: [FileEntry]
   }
-  deriving (Show, Generic)
-
-deriving instance FromJSON APIResponse
+  deriving (Show, Generic, FromJSON)
 
 fetchResponse :: (MonadThrow f, MonadIO f) => String -> f ByteString
 fetchResponse url = fmap getResponseBody $ parseRequest url >>= httpLBS
