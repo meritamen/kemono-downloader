@@ -1,0 +1,8 @@
+kemono-downloader | Downloader for Kemono.su / .party
+
+Run following commands to install and download posts:
+
+> cabal install
+> kemono-downloader https://kemono.su/fanbox/user/6005584/post/9809662
+
+Note that you need to put $HOME/.cabal/bin/ on your $PATH.
