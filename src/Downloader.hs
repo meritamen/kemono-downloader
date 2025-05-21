@@ -1,6 +1,6 @@
 module Downloader where
 
-import Control.Monad
+import Control.Concurrent.Async
 import qualified Data.ByteString.Lazy as BS
 import Network.HTTP.Simple
 import System.Directory
@@ -11,7 +11,7 @@ import Types
 downloadFile :: FilePath -> String -> String -> IO ()
 downloadFile dir url filename = do
   let outPath = dir </> filename
-  putStrLn $ "Downloading: " ++ url
+  putStrLn $ "Downloading: " ++ filename
   response <- httpLBS =<< parseRequest url
   BS.writeFile outPath (getResponseBody response)
 
@@ -21,12 +21,10 @@ download apiResponse = do
     targetDir = title . post $ apiResponse
     previewFiles = previews apiResponse
     attachmentFiles = attachments apiResponse
+    allFiles = previewFiles <> attachmentFiles
   createDirectoryIfMissing True targetDir
-  downloadFiles previewFiles targetDir
-  downloadFiles attachmentFiles targetDir
-  where
-    downloadFiles urls targetDir = forM_ urls $
-      \f -> downloadFile
-            "."
-            (server f <> "/data/" <> path f)
-            (targetDir </> name f)
+  mapConcurrently_ (\f -> downloadFile
+                            "."
+                            (server f <> "/data/" <> path f)
+                            (targetDir </> name f)) allFiles
+  putStrLn "All downloads completed."
