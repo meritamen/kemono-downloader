@@ -25,6 +25,6 @@ download apiResponse = do
   createDirectoryIfMissing True targetDir
   mapConcurrently_ (\f -> downloadFile
                             "."
-                            (server f <> "/data/" <> path f)
+                            (server f </> "data" <> path f)
                             (targetDir </> name f)) allFiles
   putStrLn "All downloads completed."
