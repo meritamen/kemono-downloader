@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE StrictData #-}
@@ -5,21 +6,25 @@
 module Types where
 
 import Data.Aeson
+import Data.Text
 import GHC.Generics
 
-data Post = Post { title :: String }
-  deriving (Show, Generic, FromJSON)
+newtype Post = Post { title :: Text }
+  deriving stock (Show, Generic)
+  deriving anyclass FromJSON
 
 data FileEntry = FileEntry
-  { server :: String
-  , name :: String
-  , path :: String
+  { server :: Text
+  , name :: Text
+  , path :: Text
   }
-  deriving (Show, Generic, FromJSON)
+  deriving stock (Show, Generic)
+  deriving anyclass FromJSON
 
 data APIResponse = APIResponse
   { post :: Post
   , previews :: [FileEntry]
   , attachments :: [FileEntry]
   }
-  deriving (Show, Generic, FromJSON)
+  deriving stock (Show, Generic)
+  deriving anyclass FromJSON

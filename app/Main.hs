@@ -1,12 +1,13 @@
 module Main where
 
+import Data.Text
 import Options.Applicative
 
 import ConvertUrl
 import Downloader
 import FetchJson
 
-data Option = Option String Bool
+data Option = Option Text Bool
 
 optionP :: Parser Option
 optionP = Option

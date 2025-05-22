@@ -27,6 +27,7 @@ library
                     , Downloader
                     , FetchJson
                     , Types
+                    , Utils
     build-depends:    aeson
                     , async
                     , base ^>=4.18.3.0
@@ -36,6 +37,7 @@ library
                     , filepath
                     , http-conduit
                     , text
+                    , text-show
     hs-source-dirs:   src
 
 executable kemono-downloader
@@ -47,6 +49,7 @@ executable kemono-downloader
     build-depends:  base ^>=4.18.3.0
                   , kemono-downloader
                   , optparse-applicative
+                  , text
 
     hs-source-dirs:   app
     default-language: Haskell2010
