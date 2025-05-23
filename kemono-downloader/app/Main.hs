@@ -3,9 +3,7 @@ module Main where
 import Data.Text
 import Options.Applicative
 
-import ConvertUrl
-import Downloader
-import FetchJson
+import Kemono.Downloader
 
 data Option = Option Text Bool
 
@@ -22,14 +20,7 @@ getOption = execParser $ info (optionP <**> helper) $
   fullDesc <> progDesc "Kemono Downloader, Mrjt Jmn<meritamen@sdf.org>"
 
 runOption :: Option -> IO ()
-runOption (Option url isSeq) = do
-  case convertPageUrlToApi url of
-    Nothing -> putStrLn "Invalid Kemono post URL format."
-    Just url -> do
-      json <- extractJson url
-      case json of
-        Nothing -> putStrLn "Invalid json format."
-        Just result -> download result isSeq
+runOption (Option url isSeq) = handle url isSeq
 
 main :: IO ()
 main = getOption >>= runOption

@@ -1,9 +1,9 @@
 cabal-version:      3.0
 name:               kemono-downloader
 version:            0.1.0.0
-synopsis:           Downloader for Kemono.su / .party
+synopsis:           Downloader for Kemono.su
 -- description:
-homepage:           https://github.com/meritamen/kemono-downloader
+homepage:           https://github.com/meritamen/kemono-toolkit
 license:            BSD-3-Clause
 license-file:       LICENSE
 author:             Mrjt Jmn
@@ -14,6 +14,10 @@ build-type:         Simple
 extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
+source-repository head
+  type: git
+  location: https://github.com/meritamen/kemono-toolkit
+
 common warnings
     ghc-options: -Wall -Wno-name-shadowing
 
@@ -23,11 +27,11 @@ common thread
 library
     import:           warnings
                     , thread
-    exposed-modules:  ConvertUrl
-                    , Downloader
-                    , FetchJson
-                    , Types
-                    , Utils
+    exposed-modules:  Kemono.Downloader
+                    , Kemono.Downloader.Api
+                    , Kemono.Downloader.Fetch
+                    , Kemono.Downloader.Types
+                    , Kemono.Downloader.Utils
     build-depends:    aeson
                     , async
                     , base ^>=4.18.3.0
@@ -46,10 +50,10 @@ executable kemono-downloader
     main-is:          Main.hs
     -- other-modules:
     -- other-extensions:
-    build-depends:  base ^>=4.18.3.0
-                  , kemono-downloader
-                  , optparse-applicative
-                  , text
+    build-depends:    base ^>=4.18.3.0
+                    , kemono-downloader
+                    , optparse-applicative
+                    , text
 
     hs-source-dirs:   app
     default-language: Haskell2010

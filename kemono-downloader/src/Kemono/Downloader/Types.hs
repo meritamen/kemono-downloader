@@ -3,7 +3,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE StrictData #-}
 
-module Types where
+module Kemono.Downloader.Types where
 
 import Data.Aeson
 import Data.Text

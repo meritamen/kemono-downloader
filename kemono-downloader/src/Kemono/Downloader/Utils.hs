@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Utils where
+module Kemono.Downloader.Utils where
 
 import Data.Text
 

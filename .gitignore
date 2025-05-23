@@ -7,3 +7,6 @@
 *.mp4
 *.mpv
 *.webp
+dist-newstyle/
+TAGS
+*.dhall

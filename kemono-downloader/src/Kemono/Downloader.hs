@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Downloader where
+module Kemono.Downloader where
 
 import Control.Concurrent.Async
 import qualified Data.ByteString.Lazy as BS
@@ -13,8 +13,10 @@ import System.Directory
 import System.FilePath
 import TextShow
 
-import Types
-import qualified Utils as U
+import Kemono.Downloader.Api
+import Kemono.Downloader.Fetch
+import Kemono.Downloader.Types
+import qualified Kemono.Downloader.Utils as U
 
 downloadFile :: FilePath -> Text -> Text -> IO ()
 downloadFile dir url filename = do
@@ -40,4 +42,14 @@ download apiResponse isSequentialFileName = do
                          then showt @Int i <> (T.pack . takeExtension . T.unpack . name $ f)
                          else name f))
     allFiles
-  putStrLn "All downloads completed."
+  TIO.putStrLn "All downloads completed."
+
+handle :: Text -> Bool -> IO ()
+handle url isSeq = do
+  case apiUrl url of
+    Nothing -> putStrLn "Invalid Kemono post URL format."
+    Just url -> do
+      json <- fetchJson url
+      case json of
+        Nothing -> putStrLn "Invalid json format."
+        Just result -> download result isSeq
