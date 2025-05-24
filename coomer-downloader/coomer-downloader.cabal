@@ -1,0 +1,57 @@
+cabal-version:      3.0
+name:               coomer-downloader
+version:            0.1.0.0
+synopsis:           Downloader for coomer.su
+-- description:
+homepage:           https://github.com/meritamen/kemono-toolkit
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Mrjt Jmn
+maintainer:         meritamen@sdf.org
+-- copyright:
+category:           Web
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+source-repository head
+  type: git
+  location: https://github.com/meritamen/kemono-toolkit
+
+common warnings
+    ghc-options: -Wall -Wno-name-shadowing
+
+common thread
+    ghc-options: -threaded
+
+library
+    import:           warnings
+                    , thread
+    exposed-modules:  Coomer.Downloader
+                    , Coomer.Downloader.Api
+    build-depends:    aeson
+                    , async
+                    , base ^>=4.18.3.0
+                    , bytestring
+                    , directory
+                    , exceptions
+                    , filepath
+                    , http-conduit
+                    , kemono-downloader
+                    , text
+                    , text-show
+    hs-source-dirs:   src
+
+executable coomer-downloader
+    import:           warnings
+                    , thread
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:    base ^>=4.18.3.0
+                    , coomer-downloader
+                    , optparse-applicative
+                    , text
+
+    hs-source-dirs:   app
+    default-language: Haskell2010

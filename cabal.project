@@ -1,4 +1,5 @@
 packages:
+  coomer-downloader
   kemono-downloader
   kemono-notifier
   kemono-matrix-notifier-bot
