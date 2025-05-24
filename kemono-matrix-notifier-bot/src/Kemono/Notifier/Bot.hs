@@ -30,8 +30,11 @@ send session room body = do
               }
           )
       txnId = "notify-" <> T.take 10 (T.replace ":" "_" body)
-  _ <- Matrix.sendMessage session room (Matrix.EventRoomMessage roomMessage) (Matrix.TxnID txnId)
-  return ()
+  ts <- timestamp
+  eventID <- Matrix.sendMessage session room (Matrix.EventRoomMessage roomMessage) (Matrix.TxnID txnId)
+  case eventID of
+    Right eventID -> TIO.putStrLn $ "[+] [" <> ts <> "] " <> Matrix.unEventID eventID
+    Left err -> TIO.putStrLn $ "[-] [" <> ts <> "] " <> T.pack (show err)
 
 monitor :: Matrix.ClientSession -> Matrix.RoomID -> Creator -> IO ()
 monitor session room (Creator creatorService creatorId creatorName) = do
