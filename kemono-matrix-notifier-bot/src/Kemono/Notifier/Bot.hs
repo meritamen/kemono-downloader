@@ -59,7 +59,7 @@ monitor session room (Creator creatorService creatorId creatorName) = do
           loop (Set.union seen (Set.fromList (map postId newPosts)))
         else do
           TIO.putStrLn $
-            "[-] [" <> ts <> "] " <> creatorService <> "/" <> creatorId <> "] No new posts."
+            "[-] [" <> ts <> "] " <> creatorName <> " [" <> creatorService <> "/" <> creatorId <> "] No new posts."
           threadDelay (5 * 60 * 1000000)
           loop seen
 
