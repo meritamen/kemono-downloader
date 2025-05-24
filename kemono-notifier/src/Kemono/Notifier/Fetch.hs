@@ -5,6 +5,7 @@ module Kemono.Notifier.Fetch where
 import Data.Aeson
 import Data.Text (Text)
 import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 import Data.Time
 import Network.HTTP.Simple
 
@@ -18,16 +19,11 @@ fetchPosts service creatorId = do
   let body = getResponseBody response
   case eitherDecode body of
     Left err -> do
-      logMsg $
-        "[-] Failed to parse JSON from " <> service <> "/" <> creatorId <> ": " <> T.pack err
+      ts <- timestamp
+      TIO.putStrLn $
+        "[-] [" <> ts <> "] Failed to parse JSON from " <> service <> "/" <> creatorId <> ": " <> T.pack err
       return []
     Right posts -> return posts
-
-logMsg :: Text -> IO ()
-logMsg msg = do
-  ts <- timestamp
-  putStrLn . T.unpack $
-    msg <> " [" <> ts <> "]"
 
 timestamp :: IO Text
 timestamp = do

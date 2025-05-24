@@ -1,3 +1,4 @@
 packages:
   kemono-downloader
   kemono-notifier
+  kemono-matrix-notifier-bot
